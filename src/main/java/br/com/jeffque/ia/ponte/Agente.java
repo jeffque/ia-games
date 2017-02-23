@@ -22,28 +22,31 @@ public class Agente {
 		}
 		
 		melhorResultado = somaHeuristica + 1;
+		System.out.println("Soma heurística: " + somaHeuristica + "; resultado a priori: " + melhorResultado);
 	}
 	
-	public int menorCusto() {
-		return menorCusto(inicial, 0, "Inicial");
+	public void menorCusto() {
+		menorCusto(inicial, 0);
 	}
 
-	private int menorCusto(Estado estadoBase, int level, String obs) {
-		
-		System.out.println(tabs(level) + "Iteração " + iteracoes++);
-		System.out.println(tabs(level) + "Observação: " + obs);
-		System.out.println(tabs(level) + "Fazendo a busca no estado (level " + level + "):\n" + estadoBase.toString(tabs(level)));
-		System.out.println(tabs(level) + "Custo atual " + melhorResultado);
-		System.out.println("\n");
+	private void menorCusto(Estado estadoBase, int level) {
+		iteracoes++;
 		if (estadoBase.custoTotal >= melhorResultado) {
-			return melhorResultado;
+			return;
 		}
 		
 		if (estadoBase.fim()) {
 			melhorResultado = estadoBase.custoTotal;
 			melhorEstado = estadoBase;
 			iteracoesMenor = iteracoes;
-			return melhorResultado;
+			
+			System.out.println(
+					"Achou bom resultado!\n" +
+					"\tmelhorResultado " + melhorResultado + "\n" +
+					"\titeracoesMenor " + iteracoesMenor
+				);
+			
+			return;
 		}
 		
 		
@@ -54,12 +57,12 @@ public class Agente {
 					// todas as possibilidades move 2 LR
 					for (int i = 0; i < estadoBase.pessoasEsquerdo.size() - 1; i++) {
 						for (int j = i + 1; j < estadoBase.pessoasEsquerdo.size(); j++) {
-							menorCusto(estadoBase.move2personLR(i, j), level + 1, "Movendo as pessoas " + estadoBase.getPessoaEsquerdo(i) + " e a pessoa " + estadoBase.getPessoaEsquerdo(j) + " da esquerda pra direita");
+							menorCusto(estadoBase.move2personLR(i, j), level + 1);
 						}
 					}
 				} else {
 					for (int i = 0; i < estadoBase.pessoasEsquerdo.size(); i++) {
-						menorCusto(estadoBase.move1personLR(i), level + 1, "Movendo a pessoa " + estadoBase.getPessoaEsquerdo(i) + " da esquerda pra direita");
+						menorCusto(estadoBase.move1personLR(i), level + 1);
 					}
 				}
 			} catch (AcaoInvalidaException e) {
@@ -70,15 +73,13 @@ public class Agente {
 			try {
 				// todas as possibilidades move 1 RL
 				for (int i = 0; i < estadoBase.pessoasDireito.size(); i++) {
-					menorCusto(estadoBase.move1personRL(i), level + 1, "Movendo a pessoa " + estadoBase.getPessoaDireito(i) + " da direita pra esquerda");
+					menorCusto(estadoBase.move1personRL(i), level + 1);
 				}
 			} catch (AcaoInvalidaException e) {
 				e.printStackTrace();
 				System.err.println("Ação inválida, ignorando outras ações possíveis");
 			}
 		}
-		
-		return melhorResultado;
 	}
 
 	private String tabs(int level) {

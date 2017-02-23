@@ -40,7 +40,8 @@ public class Agente {
 	}
 	
 	public void menorCusto() {
-		menorCusto(inicial, 0);
+		Estado maquiado = EstadoBuilder.ordenacoes(inicial);
+		menorCusto(maquiado, 0);
 	}
 
 	private void menorCusto(Estado estadoBase, int level) {

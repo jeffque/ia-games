@@ -21,8 +21,6 @@ public class Estado {
 	public Estado move2personLR(int idx1, int idx2) throws AcaoInvalidaException {
 		checkPosicaoLanterna(true);
 		
-		int mi = Math.min(idx1, idx2);
-		int Mi = Math.max(idx1, idx2);
 		int custo1;
 		int custo2;
 		
@@ -31,9 +29,11 @@ public class Estado {
 		
 		EstadoBuilder builder = EstadoBuilder.createEstadoFilho(this);
 		
-		
-		builder.pessoasEsquerdo.remove(Mi);
-		builder.pessoasEsquerdo.remove(mi);
+		for (int i = 0; i < pessoasEsquerdo.size(); i++) {
+			if (i != idx1 && i != idx2) {
+				builder.pessoasEsquerdo.add(pessoasEsquerdo.get(i));
+			}
+		}
 		
 		builder.pessoasDireito.add(custo1);
 		builder.pessoasDireito.add(custo2);
@@ -47,12 +47,15 @@ public class Estado {
 		checkPosicaoLanterna(true);
 		
 		int custo1;
-		
 		custo1 = pessoasEsquerdo.get(idx1);
-		
 		EstadoBuilder builder = EstadoBuilder.createEstadoFilho(this);
 		
-		builder.pessoasEsquerdo.remove(idx1);
+		for (int i = 0; i < pessoasEsquerdo.size(); i++) {
+			if (i != idx1) {
+				builder.pessoasEsquerdo.add(pessoasEsquerdo.get(i));
+			}
+		}
+		
 		builder.pessoasDireito.add(custo1);
 		builder.custoTotal += custo1;
 		
@@ -62,17 +65,16 @@ public class Estado {
 	public Estado move1personRL(int idx1) throws AcaoInvalidaException {
 		checkPosicaoLanterna(false);
 		
-		int mi = idx1;
 		int custo1;
-		
 		custo1 = pessoasDireito.get(idx1);
-		
 		EstadoBuilder builder = EstadoBuilder.createEstadoFilho(this);
-		
-		builder.pessoasDireito.remove(mi);
-		
+
+		for (int i = 0; i < pessoasDireito.size(); i++) {
+			if (i != idx1) {
+				builder.pessoasDireito.add(pessoasDireito.get(i));
+			}
+		}
 		builder.pessoasEsquerdo.add(custo1);
-		
 		builder.custoTotal += custo1;
 		
 		return builder.build();

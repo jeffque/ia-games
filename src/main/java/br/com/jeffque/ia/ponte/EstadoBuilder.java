@@ -17,10 +17,15 @@ public class EstadoBuilder {
 		EstadoBuilder builder = new EstadoBuilder();
 		builder.estadoPai = estado;
 		
-		builder.pessoasEsquerdo.addAll(estado.pessoasEsquerdo);
-		builder.pessoasDireito.addAll(estado.pessoasDireito);
+		// no estado anterior, tava no lado esquerdo?
+		if (estado.lanternaEsquerda) {
+			builder.lanternaEsquerda = false;
+			builder.pessoasDireito.addAll(estado.pessoasDireito);
+		} else {
+			builder.lanternaEsquerda = true;
+			builder.pessoasEsquerdo.addAll(estado.pessoasEsquerdo);
+		}
 		
-		builder.lanternaEsquerda = !estado.lanternaEsquerda;
 		builder.custoTotal = estado.custoTotal;
 		
 		return builder;

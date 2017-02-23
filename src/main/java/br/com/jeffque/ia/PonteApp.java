@@ -15,7 +15,10 @@ import br.com.jeffque.ia.ponte.EstadoBuilder;
  */
 public class PonteApp {
 	public static void main(String[] args) {
-		Agente ambiente = new Agente(buildEstadoInicial());
+		Estado inicial = buildEstadoInicial();
+		Agente ambiente = new Agente(inicial);
+		System.out.println("Resolvendo o seguinte sistema:");
+		System.out.println(inicial);
 		ambiente.menorCusto();
 		System.out.println("Menor custo: " + ambiente.getMelhorEstado().getCustoTotal());
 		

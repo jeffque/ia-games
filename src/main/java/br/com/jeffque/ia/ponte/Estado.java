@@ -116,4 +116,8 @@ public class Estado {
 	public boolean lanternaLadoEsquerdo() {
 		return lanternaEsquerda;
 	}
+	
+	public int getCustoTotal() {
+		return custoTotal;
+	}
 }

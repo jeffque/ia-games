@@ -10,17 +10,31 @@ public class Agente {
 	public Agente(Estado inicial) {
 		this.inicial = inicial;
 		
-		// heurística para um upper cut: todasas pessoas andam duas vezes
+		// heurística para um upper cut:
+		// 		* ignora a existência do lado direito, já que posso fazer toda a migração sócom gente do esquerdo 
+		// 		* repetir até não sobrar ninguém:
+		// 		* 		vão as duas pessoas de maior peso
+		// 		* 		se tiver algum do outro lado, retornar a pessoa mais leve
+		// com isso, temos que:
+		// 		* o mais pesado só conta uma vez
+		// 		* o mais leve não pe levado em consideração
+		// 		* todos os demais são contados duas vezes
 		// qualquer resultado que isso contém trabalho em vão
+		// em outras palavras:
+		// 		heurística = soma todos * 2 - maior - 2*menor
 		int somaHeuristica = 0;
+		int maior = inicial.pessoasEsquerdo.get(0);
+		int menor = inicial.pessoasEsquerdo.get(0);
+		
 		for (int peso: inicial.pessoasEsquerdo) {
 			somaHeuristica += 2*peso;
+			if (peso > maior) {
+				maior = peso;
+			} else if (peso < menor) {
+				menor = peso;
+			}
 		}
-		
-		for (int peso: inicial.pessoasDireito) {
-			somaHeuristica += 2*peso;
-		}
-		
+		somaHeuristica = somaHeuristica - maior - 2 * menor;
 		melhorResultado = somaHeuristica + 1;
 		System.out.println("Soma heurística: " + somaHeuristica + "; resultado a priori: " + melhorResultado);
 	}

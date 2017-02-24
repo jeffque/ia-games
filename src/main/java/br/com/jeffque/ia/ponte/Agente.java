@@ -3,8 +3,8 @@ package br.com.jeffque.ia.ponte;
 public class Agente {
 	final Estado inicial;
 	int melhorResultado;
-	int iteracoesMenor = 0;
-	int iteracoes = 0;
+	long iteracoesMenor = 0;
+	long iteracoes = 0;
 	Estado melhorEstado = null;
 	
 	public Agente(Estado inicial) {
@@ -125,11 +125,11 @@ public class Agente {
 		return melhorEstado;
 	}
 
-	public int iteracoesAteMenor() {
+	public long iteracoesAteMenor() {
 		return iteracoesMenor;
 	}
 
-	public int iteracoesTotal() {
+	public long iteracoesTotal() {
 		return iteracoes;
 	}
 }

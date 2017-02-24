@@ -19,24 +19,39 @@ public class Agente {
 		// 		* o mais pesado só conta uma vez
 		// 		* o mais leve não pe levado em consideração
 		// 		* todos os demais são contados duas vezes
-		// qualquer resultado que isso contém trabalho em vão
 		// em outras palavras:
 		// 		heurística = soma todos * 2 - maior - 2*menor
-		int somaHeuristica = 0;
+		//
+		// uma outra heurística:
+		// 		* o menor acompanha todos os demais
+		// 		* se tiver alguém ainda do lado esquerdo, o menor volta
+		// em outras palavras:
+		// 		heurística2 = soma todos - menor + (quantidade - 1)*menor
+		int somaHeuristica1 = 0;
+		int somaHeuristica2 = 0;
 		int maior = inicial.pessoasEsquerdo.get(0);
 		int menor = inicial.pessoasEsquerdo.get(0);
 		
 		for (int peso: inicial.pessoasEsquerdo) {
-			somaHeuristica += 2*peso;
+			somaHeuristica1 += 2*peso;
+			somaHeuristica2 += peso;
 			if (peso > maior) {
 				maior = peso;
 			} else if (peso < menor) {
 				menor = peso;
 			}
 		}
-		somaHeuristica = somaHeuristica - maior - 2 * menor;
-		melhorResultado = somaHeuristica + 1;
-		System.out.println("Soma heurística: " + somaHeuristica + "; resultado a priori: " + melhorResultado);
+		
+		// As somas heurísticas só funcionam se tiver pelo menos 2 pessoas
+		if (inicial.pessoasEsquerdo.size() >= 2) {
+			somaHeuristica1 = somaHeuristica1 - maior - 2 * menor;
+			somaHeuristica2 = somaHeuristica2 + (inicial.pessoasEsquerdo.size() - 2) * menor;
+		} else {
+			// se tiver só uma pessoa, o melhor caso é só a soma básica
+			somaHeuristica1 = somaHeuristica2;
+		}
+		melhorResultado = Math.min(somaHeuristica1, somaHeuristica2) + 1;
+		System.out.println("Soma heurística1: " + somaHeuristica1 + "\nSoma heurística2: " + somaHeuristica2 + "\nResultado a priori: " + melhorResultado);
 	}
 	
 	public void menorCusto() {

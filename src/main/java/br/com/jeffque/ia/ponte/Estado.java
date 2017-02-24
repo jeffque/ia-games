@@ -108,7 +108,7 @@ public class Estado {
 	}
 
 	public String toString(String prepend) {
-		return prepend + "Esquerdo: " + pessoasEsquerdo + "\n" + prepend + "Direito: " + pessoasDireito + "\n" + prepend + "Custo: " + custoTotal;
+		return prepend + "Esquerdo: " + pessoasEsquerdo + (lanternaEsquerda? "*": "") + "\n" + prepend + "Direito: " + pessoasDireito + (lanternaEsquerda? "": "*") + "\n" + prepend + "Custo: " + custoTotal;
 	}
 
 	public Estado getEstadoPai() {

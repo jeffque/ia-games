@@ -46,7 +46,6 @@ public class EstadoBuilder {
 		builder.pessoasEsquerdo.addAll(estado.pessoasEsquerdo);
 		
 		builder.custoTotal = estado.custoTotal;
-		builder.estadoPai = estado.estadoPai;
 		
 		builder.pessoasEsquerdo.sort(new Comparator<Integer>() {
 

@@ -2,6 +2,8 @@ package br.com.jeffque.ia.ponte;
 
 import java.util.ArrayList;
 
+import br.com.jeffque.ia.AcaoInvalidaException;
+
 public class Estado {
 	public Estado(ArrayList<Integer> pessoasEsquerdo, ArrayList<Integer> pessoasDireito, int custoTotal, Estado estadoPai, boolean lanternaEsquerda) {
 		this.pessoasEsquerdo = pessoasEsquerdo;

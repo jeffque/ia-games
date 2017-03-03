@@ -1,5 +1,7 @@
 package br.com.jeffque.ia.ponte;
 
+import br.com.jeffque.ia.AcaoInvalidaException;
+
 public class Agente {
 	final Estado inicial;
 	int melhorResultado;
